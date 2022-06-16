@@ -8,11 +8,12 @@ export type FilterValueType = 'all' | 'active' | 'completed'
 
 function App() {
 
-    const [tasks, setTasks] = React.useState([{id: v4(), title: 'HTML&CSS', isDone: true}, {
-        id: v4(),
-        title: 'JS',
-        isDone: true
-    }, {id: v4(), title: 'ReactJS', isDone: false}, {id: v4(), title: 'TSX', isDone: false}])
+    const [tasks, setTasks] = React.useState([
+        {id: v4(), title: 'HTML&CSS', isDone: true},
+        {id: v4(), title: 'JS', isDone: true},
+        {id: v4(), title: 'ReactJS', isDone: false},
+        {id: v4(), title: 'TSX', isDone: false}]
+    )
 
     const [filterValue, setFilterValue] = React.useState<FilterValueType>('all')
 
@@ -46,17 +47,19 @@ function App() {
         tasksForToDoList = tasksForToDoList.filter(obj => obj.isDone)
     }
 
-    return (<div className='App'>
-        <Todolist
-            title='What to learn'
-            tasks={tasksForToDoList}
-            removeTask={removeTask}
-            changeFilter={changeFilter}
-            addTask={addTask}
-            changeTaskStatus={changeTaskStatus}
-            filter={filterValue}
-        />
-    </div>)
+    return (
+        <div className='App'>
+            <Todolist
+                title='What to learn'
+                tasks={tasksForToDoList}
+                removeTask={removeTask}
+                changeFilter={changeFilter}
+                addTask={addTask}
+                changeTaskStatus={changeTaskStatus}
+                filter={filterValue}
+            />
+        </div>
+    )
 }
 
 export default App

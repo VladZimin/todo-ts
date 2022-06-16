@@ -1,4 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react'
+
 import {FilterValueType} from './App'
 import {Button} from './components/Button'
 
@@ -43,6 +44,20 @@ export function Todolist(props: PropsType) {
     }
     const onClickFilterTasksHandler = (value: FilterValueType) => props.changeFilter(value)
 
+    const renderedTasksList = props.tasks.map(el => {
+        const onClickRemoveHandler = () => {
+            props.removeTask(el.id)
+        }
+        const onChangeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+            props.changeTaskStatus(el.id, e.currentTarget.checked)
+        }
+
+        return <li key={el.id}>
+            <Button name={'x'} callBack={onClickRemoveHandler}/>
+            <input onChange={onChangeTaskStatusHandler} type='checkbox' checked={el.isDone}/>
+            <span className={el.isDone ? 'is-done' : ''}>{el.title}</span>
+        </li>
+    })
 
     return <div>
         <h3>{props.title}</h3>
@@ -59,19 +74,7 @@ export function Todolist(props: PropsType) {
             {error && <div className='error-message'>{error}</div>}
         </div>
         <ul>
-            {props.tasks.map(el => {
-                const onClickRemoveHandler = () => {
-                    props.removeTask(el.id)
-                }
-                const onChangeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                    props.changeTaskStatus(el.id, e.currentTarget.checked)
-                }
-                return <li key={el.id}>
-                    <Button name={'x'} callBack={onClickRemoveHandler}/>
-                    <input onChange={onChangeTaskStatusHandler} type='checkbox' checked={el.isDone}/>
-                    <span className={el.isDone ? 'is-done' : ''}>{el.title}</span>
-                </li>
-            })}
+            {renderedTasksList}
         </ul>
         <div>
             <Button name={'All'} callBack={() => onClickFilterTasksHandler('all')}
